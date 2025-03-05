@@ -1,0 +1,59 @@
+name: Java CI with Gradle
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # バージョンタグがプッシュされたときに実行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: チェックアウト
+        uses: actions/checkout@v3
+
+      - name: JDK 17のセットアップ
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Gradleのセットアップ
+        uses: gradle/gradle-build-action@v2
+
+      - name: ビルド
+        run: ./gradlew build
+
+      - name: プロジェクト情報の取得
+        id: project_info
+        run: |
+          echo "name=$(./gradlew -q printProjectName)" >> $GITHUB_ENV
+          echo "version=$(./gradlew -q printProjectVersion)" >> $GITHUB_ENV
+
+      - name: JARファイルのアップロード
+        uses: actions/upload-artifact@v3
+        with:
+          name: plugin-jar
+          path: build/libs/${{ env.name }}-${{ env.version }}.jar
+
+      - name: リリースの作成
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: リリースにアセットをアップロード
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: build/libs/${{ env.name }}-${{ env.version }}.jar
+          asset_name: ${{ env.name }}-${{ env.version }}.jar
+          asset_content_type: application/java-archive
