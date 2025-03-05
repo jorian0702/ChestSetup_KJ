@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.kj'
+version = '1.0'
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+repositories {
+    mavenCentral()
+    maven {
+        name = 'papermc'
+        url = 'https://repo.papermc.io/repository/maven-public/'
+    }
+}
+
+dependencies {
+    // PaperMC API はサーバー側で提供されるので、jar には含めません。
+    compileOnly 'io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT'
+}
+
+jar {
+    archiveBaseName.set("ChestSetup_KJ")
+    archiveVersion.set(version)
+}

@@ -1,0 +1,8 @@
+name: ChestSetUP_KJ
+main: com.kj.chestsetup.ChestSetup
+version: 1.0
+api-version: 1.21
+commands:
+  chestsetup:
+    description: チェストの設置・削除を行います（OP専用）
+    usage: /chestsetup <チェスト名|remove|removeall>

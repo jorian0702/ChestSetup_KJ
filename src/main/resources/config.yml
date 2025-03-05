@@ -1,0 +1,4 @@
+chests:
+  ExampleChest:
+    DIAMOND: 5
+    GOLD_INGOT: 10
