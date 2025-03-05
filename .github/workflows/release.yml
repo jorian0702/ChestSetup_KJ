@@ -37,10 +37,11 @@ jobs:
           echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
       - name: JARファイルのアップロード
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: plugin-jar
           path: build/libs/ChestSetup_KJ-*.jar
+          retention-days: 5
 
       - name: リリースの作成
         id: create_release
