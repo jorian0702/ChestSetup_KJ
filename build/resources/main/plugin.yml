@@ -6,3 +6,4 @@ commands:
   chestsetup:
     description: チェストの設置・削除を行います（OP専用）
     usage: /chestsetup <チェスト名|remove|removeall>
+    tab-complete: true

@@ -31,13 +31,6 @@ public class ChestListener implements Listener {
         
         // 管理対象のチェストかどうかチェック
         if (plugin.getActiveChests().containsKey(loc)) {
-            final String chestName = plugin.getActiveChests().get(loc);
-            Location baseLoc = plugin.getBaseLocations().get(chestName);
-            if (baseLoc == null) {
-                baseLoc = loc; // 念のため
-            }
-            final Location finalBaseLoc = baseLoc; // ラムダ式用のfinal変数
-            
             // チェスト内の残りアイテムをドロップ
             Inventory inv = event.getInventory();
             for (ItemStack item : inv.getContents()) {
@@ -51,11 +44,6 @@ public class ChestListener implements Listener {
             
             // 管理対象から削除
             plugin.getActiveChests().remove(loc);
-            
-            // 30分後（36000 tick）に再スポーン（基準位置付近にランダムに設置）
-            Bukkit.getScheduler().runTaskLater(plugin, () -> {
-                plugin.spawnChest(chestName, finalBaseLoc);
-            }, 36000L);
         }
     }
 }
