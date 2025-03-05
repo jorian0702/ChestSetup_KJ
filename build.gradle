@@ -24,3 +24,9 @@ jar {
     archiveBaseName.set("ChestSetup_KJ")
     archiveVersion.set(version)
 }
+
+// Gradle Wrapper タスクの設定
+wrapper {
+    gradleVersion = '8.4'
+    distributionType = Wrapper.DistributionType.BIN
+}

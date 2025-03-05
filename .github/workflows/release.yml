@@ -21,9 +21,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Gradleのセットアップ
-        uses: gradle/gradle-build-action@v2
-
+      # Gradleラッパーの生成を最初に行う
+      - name: Gradleラッパーの生成
+        run: gradle wrapper
+        
       - name: Gradleに実行権限を付与
         run: chmod +x ./gradlew
 
