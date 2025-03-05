@@ -44,26 +44,13 @@ jobs:
           path: build/libs/ChestSetup_KJ-*.jar
           retention-days: 5
 
-      - name: リリースの作成
-        id: create_release
-        uses: actions/create-release@v1
+      - name: リリースの作成とアセットのアップロード
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ github.ref_name }}
+          files: build/libs/ChestSetup_KJ-${{ env.version }}.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref_name }}
-          draft: false
-          prerelease: false
-
-      - name: リリースにアセットをアップロード
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/libs/ChestSetup_KJ-${{ env.version }}.jar
-          asset_name: ChestSetup_KJ-${{ env.version }}.jar
-          asset_content_type: application/java-archive
 
       - name: セマンティックバージョンタグの更新
         uses: tchupp/actions-update-semver-tags@v1
