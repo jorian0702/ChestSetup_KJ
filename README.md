@@ -30,4 +30,4 @@ ChestSetup_KJは、Minecraft Paper/Spigotサーバー用のプラグインで、
 - Java 17以上
 
 ## ライセンス
-このプラグインは自由に使用・改変・再配布が可能です。
+このプラグインはMITライセンスの下で公開されています。詳細は[LICENSE](LICENSE)ファイルを参照してください。
